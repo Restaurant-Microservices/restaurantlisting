@@ -1,6 +1,7 @@
 package com.restaurant.restaurantlisting.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.lang.NonNull;
@@ -24,4 +25,20 @@ public class RestaurantService {
 		List<Restaurant> restaurants= restaurantRepo.findAll();
 		return restaurants.stream().map(restaurant -> RestaurantMapper.INSTANCE.mapRestaurantToRestaurantDTO(restaurant)).collect(Collectors.toList());
 	}
+	
+	public RestaurantDTO addRestaurantInDB(RestaurantDTO restaurantDTO) {
+		Restaurant savedRestaurant = restaurantRepo.save(RestaurantMapper.INSTANCE.mapRestaurantDTOToRestaurant(restaurantDTO));
+		return RestaurantMapper.INSTANCE.mapRestaurantToRestaurantDTO(savedRestaurant);
+	}
+	
+	public RestaurantDTO fetchRestaurantById(Integer id) {
+		Optional<Restaurant> restaurant = restaurantRepo.findById(id);
+		if(restaurant.isPresent()) {
+			return RestaurantMapper.INSTANCE.mapRestaurantToRestaurantDTO(restaurant.get());
+		}else {
+			return null;
+		}
+	}
+	
+	
 }
