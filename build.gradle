@@ -28,8 +28,9 @@ ext {
 	set('springCloudVersion', "2024.0.0-RC1")
 }
 
-tasks.withType(JavaCompile) {
+compileJava {
     options.annotationProcessorPath = configurations.annotationProcessor
+    options.setAnnotationProcessorGeneratedSourcesDirectory(file("E:\\projects\\RestaurantMicroservice\\restaurantlisting\\src\\main\\java")) 
 }
 
 dependencies {
@@ -37,10 +38,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.mapstruct:mapstruct:1.6.3'
-	compileOnly 'org.projectlombok:lombok'
+	
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'	
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
