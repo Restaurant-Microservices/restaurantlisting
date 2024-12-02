@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.restaurant.restaurantlisting.dto.RestaurantDTO;
 import com.restaurant.restaurantlisting.service.RestaurantService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/restaurant")
 @RequiredArgsConstructor
+@Validated
 public class RestaurantController {
 	
 	@NonNull
@@ -31,7 +34,7 @@ public class RestaurantController {
 	}
 	
 	@PostMapping("/addRestaurant")
-	public ResponseEntity<RestaurantDTO> saveRestaurant(@RequestBody RestaurantDTO restaurantDTO){
+	public ResponseEntity<RestaurantDTO> saveRestaurant(@Valid @RequestBody RestaurantDTO restaurantDTO){
 		RestaurantDTO restaurantAdded = restaurantService.addRestaurantInDB(restaurantDTO);
 		return new ResponseEntity<>(restaurantAdded, HttpStatus.CREATED);
 	}
